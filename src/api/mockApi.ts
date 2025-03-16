@@ -25,7 +25,7 @@ export const mockApi = {
 
   async getUser(id: string) {
     await simDelay()
-    return users.find(i => i.id === id) || Promise.reject('Error: No User found')
+    return users.find(i => i.id === id) || Promise.reject('Avatar signal has been lost, trace unknown')
   },
 
   async getUsers({ page = 1, limit = 10, filter = {}, sort = {} }: GetUsersParams = {}) {
@@ -48,5 +48,34 @@ export const mockApi = {
 
     return { data: data.slice((page - 1) * limit, page * limit), total: data.length, page, limit };
   },
+
+  async createUser(user: Omit<User, 'id' | 'dateJoined'>) {
+    await simDelay()
+    const newUser = {
+      id: (users.length + 1).toString(),
+      dateJoined: new Date().toISOString(),
+      ...user
+    }
+    users.push(newUser)
+    return newUser
+  },
+
+  async updateUser(id: string, updates: Partial<Omit<User, 'id' | 'dateJoined'>>) {
+    await simDelay()
+    const index = users.findIndex(i => i.id === id)
+    if (index === -1)
+      return Promise.reject('Synchronization failed, connection to avatar unstable')
+    users[index] = { ...users[index], ...updates }
+    return users[index]
+  },
+
+  async deleteUser(id: string) {
+    await simDelay()
+    const index = users.findIndex(i => i.id === id)
+    if (index === -1)
+      return Promise.reject('Void rejection, this avatar resists deletion')
+    users.splice(index, 1)
+    return { message: 'Avatar erased, trace successfully removed from the void' }
+  }
 
 }
