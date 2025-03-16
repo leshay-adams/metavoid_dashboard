@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { User, Role } from '../types.ts'
+import type { User, Role } from '../types.ts'
 import { mockApi } from '../api/mockApi.ts'
 
 export const useAvatarStore = defineStore('avatarStore', {

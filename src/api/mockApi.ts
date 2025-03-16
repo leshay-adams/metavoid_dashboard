@@ -1,4 +1,4 @@
-import { User, Role } from '../types'
+import type { User, Role, GetUsersParams } from '../types'
 
 const roles: Readonly<Role[]> = [
   {id: 'admin', name: 'Admin'},
@@ -12,7 +12,7 @@ let users: User[] = [...Array(50)].map((_, i) => ({
   id: (i + 1).toString(),
   name: `User ${i + 1}`,
   email: `alias${i + 1}@metavoid.com`,
-  role: roles[i % 3].id,
+  role: roles[i % 3].id as 'admin' | 'manager' | 'viewer',
   status: i % 2 ? 'inactive' : 'active',
   dateJoined: new Date(pastSixMonths + Math.random() * (Date.now() - pastSixMonths)).toISOString()
 }))

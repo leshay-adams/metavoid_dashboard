@@ -11,3 +11,17 @@ export interface Role {
   id: string
   name: string
 }
+
+export interface GetUsersParams {
+  page?: number;
+  limit?: number;
+  filter?: {
+    name?: string;
+    role?: 'admin' | 'manager' | 'viewer';
+    status?: 'active' | 'inactive';
+  };
+  sort?: {
+    field?: 'name' | 'dateJoined';
+    order?: 'asc' | 'desc';
+  };
+}
