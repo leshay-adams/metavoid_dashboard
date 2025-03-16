@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import UsersView from './components/UsersView.vue'
+import UserDashboard from './views/UserDashboard.vue'
 </script>
 
 <template>
-  <UsersView msg="Vite + Vue" />
+  <UserDashboard />
 </template>
