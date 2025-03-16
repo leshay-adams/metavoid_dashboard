@@ -1,22 +1,11 @@
-export interface User {
-  id: string
-  name: string
-  email: string
-  role: 'admin' | 'manager' | 'viewer'
-  status: 'active' | 'inactive'
-  dateJoined: string
-}
-
-export interface Role {
-  id: string
-  name: string
-}
+import { User, Role } from '../types'
 
 const roles: Readonly<Role[]> = [
   {id: 'admin', name: 'Admin'},
-  {id: 'manager', 'name': 'Manager'},
+  {id: 'manager', name: 'Manager'},
   {id: 'viewer', name: 'Viewer'}
 ]
+
 const pastSixMonths = Date.now() - 180 * 24 * 60 * 60 * 1000;
 
 let users: User[] = [...Array(50)].map((_, i) => ({
