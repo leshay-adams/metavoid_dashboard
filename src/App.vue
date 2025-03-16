@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import UserDashboard from './views/UserDashboard.vue'
+import AvatarDashboard from './views/AvatarDashboard.vue'
 </script>
 
 <template>
-  <UserDashboard />
+  <AvatarDashboard />
 </template>
