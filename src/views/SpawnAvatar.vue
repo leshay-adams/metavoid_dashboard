@@ -27,7 +27,10 @@ const createAvatar = async () => {
   try {
     await avatarStore.addAvatar(newAvatar.value)
     successMsg.value = 'Avatar spawned in void!'
-    router.push({ name: 'AvatarProfile', params: { id: avatarStore.avatars[avatarStore.avatars.length - 1].id } })
+    router.push({
+      name: 'AvatarProfile',
+      params: { id: avatarStore.avatars[avatarStore.avatars.length - 1].id }
+    })
   } catch (err) {
     errMsg.value = 'Avatar spawn failed. Please try again.'
   } finally {
@@ -43,38 +46,38 @@ const roles = computed(() => [
 </script>
 
 <template>
-  <div class="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6">
-    <h2 class="text-xl font-semibold text-center mb-4">Spawn Avatar</h2>
+  <div class="max-w-2xl mx-auto rounded-xl text-white bg-gradient-to-r from-purple-600 to-blue-500 relative overflow-x-auto p-6 shadow-lg transform transition-transform hover:scale-105">
+    <h2 class="text-2xl font-bold mb-4 text-center">Spawn Avatar</h2>
 
     <div class="space-y-4">
       <div>
-        <label for="codename" class="block text-sm font-medium">Codename</label>
+        <label for="codename" class="text-white font-semibold text-lg">Codename</label>
         <input
           id="codename"
           v-model="newAvatar.name"
-          class="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400"
           placeholder="Enter Codename"
           type="text"
           required
         />
       </div>
       <div>
-        <label for="email" class="block text-sm font-medium">Email</label>
+        <label for="email" class="font-semibold text-lg">Comm Channel</label>
         <input
           id="email"
           v-model="newAvatar.email"
-          class="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          class="w-full rounded-lg p-3 bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400"
           placeholder="Enter Avatar Email"
           type="email"
           required
         />
       </div>
       <div>
-        <label for="role" class="block text-sm font-medium">World Access Level</label>
+        <label for="role" class="font-semibold text-lg">World Access Level</label>
         <select
           id="role"
           v-model="newAvatar.role"
-          class="w-full mt-1 p-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-400"
         >
           <option v-for="role in roles" :key="role.value" :value="role.value">
             {{ role.label }}
@@ -82,11 +85,11 @@ const roles = computed(() => [
         </select>
       </div>
       <div>
-        <label for="status" class="block text-sm font-medium">Connection Status</label>
+        <label for="status" class="font-semibold text-lg">Connection Status</label>
         <select
           id="status"
           v-model="newAvatar.status"
-          class="w-full mt-1 p-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-400"
         >
           <option value="active">{{ transformStatus('active') }}</option>
           <option value="inactive">{{ transformStatus('inactive') }}</option>
@@ -94,13 +97,13 @@ const roles = computed(() => [
       </div>
       <button
         @click="createAvatar"
-        class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+        class="w-full cursor-pointer rounded-lg bg-indigo-800 text-white px-6 py-2 transition-all hover:bg-blue-900 focus:ring-2 focus:ring-blue-400"
         :disabled="isLoading"
       >
-        {{ isLoading ? "Spawning..." : "Create Avatar" }}
+        {{ isLoading ? "Spawning..." : "Spawn Avatar" }}
       </button>
-      <p v-if="successMsg" class="text-green-600 text-sm text-center mt-2">{{ successMsg }}</p>
-      <p v-if="errMsg" class="text-red-600 text-sm text-center mt-2">{{ errMsg }}</p>
+      <p v-if="successMsg" class="text-green-400 text-sm text-center mt-2">{{ successMsg }}</p>
+      <p v-if="errMsg" class="text-red-400 text-sm text-center mt-2">{{ errMsg }}</p>
     </div>
   </div>
 </template>

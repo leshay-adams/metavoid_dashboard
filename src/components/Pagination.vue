@@ -34,17 +34,51 @@
 </script>
 
 <template>
-  <button @click="onClickFirstPage" :disabled="isOnFirstPage" type="button">
-    First
-  </button>
-  <button @click="onClickPreviousPage" :disabled="isOnFirstPage" type="button">
-    <<
-  </button>
-  <button v-for="page in pages" @click="() => onClickPage(page.name)" :disabled="page.disabled">{{ page.name }}</button>
-  <button @click="onClickNextPage" :disabled="isOnLastPage" type="button">
-    >>
-  </button>
-  <button @click="onClickLastPage" :disabled="isOnLastPage" type="button">
-    Last
-  </button>
+  <div>
+    <button
+      @click="onClickFirstPage"
+      :disabled="isOnFirstPage"
+      type="button"
+      class="px-4 py-2 rounded-lg text-white font-medium bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+    >
+      First
+    </button>
+    <button
+      @click="onClickPreviousPage"
+      :disabled="isOnFirstPage"
+      type="button"
+      class="px-3 py-2 rounded-lg text-white font-medium bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+    >
+      &#60;&#60;
+    </button>
+    <button
+      v-for="page in pages"
+      @click="() => onClickPage(page.name)"
+      :disabled="page.disabled"
+      :class="[
+        'px-4 py-2 rounded-lg font-medium transition-all',
+        page.disabled
+          ? 'bg-indigo-700 text-white'
+          : 'bg-gray-800 text-gray-300 hover:bg-indigo-600 hover:text-white'
+      ]"
+    >
+      {{ page.name }}
+    </button>
+    <button
+      @click="onClickNextPage"
+      :disabled="isOnLastPage"
+      type="button"
+      class="px-3 py-2 rounded-lg text-white font-medium bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+    >
+      &#62;&#62;
+    </button>
+    <button
+      @click="onClickLastPage"
+      :disabled="isOnLastPage"
+      type="button"
+      class="px-4 py-2 rounded-lg text-white font-medium bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition-all"
+    >
+      Last
+    </button>
+  </div>
 </template>

@@ -75,66 +75,77 @@ onMounted(async () => {
 
 <template>
   <div class="max-w-6xl mx-auto rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 relative overflow-x-auto p-6 shadow-lg transform transition-transform hover:scale-105">
-    <div class="space-y-4 mb-8">
-      <div class="flex justify-between">
-        <div class="w-1/3 space-y-2">
-          <label for="nameFilter" class="font-semibold text-lg text-white">Filter By Name</label>
-          <input
-            placeholder="Input Codename"
-            type="text"
-            v-model="nameFilter"
-            id="nameFilter"
-            @input="setDebouncedValue(nameFilter)"
-            class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400"
-          >
-        </div>
-        <div class="w-1/3 space-y-2">
-          <label for="roleFilter" class="font-semibold text-lg text-white">Filter By Role</label>
-          <select id="roleFilter" v-model="roleFilter" class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400">
-            <option value="">All</option>
-            <option v-for="role in roles" :key="role.value" :value="role.value">
-              {{ role.label }}
-            </option>
-          </select>
-        </div>
-        <div class="w-1/3 space-y-2">
-          <label for="statusFilter" class="font-semibold text-lg text-white">Filter By status</label>
-          <select id="statusFilter" v-model="statusFilter" class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400">
-            <option value="">All</option>
-            <option value="active">
-              {{ transformStatus('active') }}
-            </option>
-            <option value="inactive">
-              {{ transformStatus('inactive') }}
-            </option>
-          </select>
-        </div>
+
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-white text-2xl font-bold">Avatar Directory</h2>
+      <button
+        @click="router.push({ name: 'SpawnAvatar' })"
+        class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition-all focus:ring-2 focus:ring-indigo-400"
+      >
+        Spawn Avatar
+      </button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="space-y-2">
+        <label for="nameFilter" class="font-semibold text-lg text-white">Filter By Name</label>
+        <input
+          placeholder="Enter Codename"
+          type="text"
+          v-model="nameFilter"
+          id="nameFilter"
+          @input="setDebouncedValue(nameFilter)"
+          class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-indigo-400"
+        />
       </div>
-      <div class="flex justify-between space-x-4">
-        <div class="w-1/3 space-y-2">
-          <label for="sortByField" class="font-semibold text-lg text-white">Sort By</label>
-          <select id="sortByField" v-model="sortByField"  class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400">
-            <option value="">None</option>
-            <option value="name">Name</option>
-            <option value="dateJoined">Date Joined</option>
-          </select>
-        </div>
-        <div class="w-1/3 space-y-2">
-          <label for="sortByOrder" class="font-semibold text-lg text-white">Order</label>
-          <select id="sortByOrder" v-model="sortByOrder"  class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400">
-            <option value="">None</option>
-            <option value="asc">Asc</option>
-            <option value="desc">Desc</option>
-          </select>
-        </div>
-        <div class="flex justify-end items-center">
-          <button @click="applyFilters" class="rounded-l bg-blue-600 text-white transition-all px-6 py-2 hover:bg-blue-700 focus:ring-2 focus:ring-blue-400">
-            Apply Filters
-          </button>
-        </div>
+      <div class="space-y-2">
+        <label for="roleFilter" class="font-semibold text-lg text-white">Filter By Role</label>
+        <select id="roleFilter" v-model="roleFilter" class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-indigo-400">
+          <option value="">All</option>
+          <option v-for="role in roles" :key="role.value" :value="role.value">
+            {{ role.label }}
+          </option>
+        </select>
+      </div>
+      <div class="space-y-2">
+        <label for="statusFilter" class="font-semibold text-lg text-white">Filter By Status</label>
+        <select id="statusFilter" v-model="statusFilter" class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-indigo-400">
+          <option value="">All</option>
+          <option value="active">
+            {{ transformStatus('active') }}
+          </option>
+          <option value="inactive">
+            {{ transformStatus('inactive') }}
+          </option>
+        </select>
       </div>
     </div>
-    <table v-if="!avatarStore.loading" class="w-full bg-gray-800 rounded-xl text-white text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="space-y-2">
+        <label for="sortByField" class="font-semibold text-lg text-white">Sort By</label>
+        <select id="sortByField" v-model="sortByField" class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-indigo-400">
+          <option value="">None</option>
+          <option value="name">Name</option>
+          <option value="dateJoined">Date Joined</option>
+        </select>
+      </div>
+      <div class="space-y-2">
+        <label for="sortByOrder" class="font-semibold text-lg text-white">Order</label>
+        <select id="sortByOrder" v-model="sortByOrder" class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-indigo-400">
+          <option value="">None</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button @click="applyFilters" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all focus:ring-2 focus:ring-indigo-400">
+          Apply Filters
+        </button>
+      </div>
+    </div>
+
+    <table v-if="!avatarStore.loading" class="w-full bg-gray-800 rounded-xl text-white text-sm">
       <thead class="text-xs text-gray-400 uppercase">
         <tr>
           <th scope="col" class="px-6 py-3">Name</th>
@@ -161,11 +172,16 @@ onMounted(async () => {
         </tr>
       </tbody>
     </table>
-    <h4 v-else>Booting Avatars...</h4>
-    <Pagination
-      :currentPage="currentPage"
-      :totalPages="totalPages"
-      @pagechanged="handlePageChange"
-    />
+    <h4 v-else class="text-white text-center">Booting Avatars...</h4>
+
+    <div class="flex justify-center mt-6">
+      <Pagination
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @pagechanged="handlePageChange"
+        class="flex space-x-2"
+      />
+    </div>
+
   </div>
 </template>
