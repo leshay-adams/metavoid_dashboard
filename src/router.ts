@@ -5,24 +5,29 @@ import { useAuthStore } from './stores/authStore'
 const routes = [
   {
     path: '/',
-    name: 'Avatar',
+    name: 'AvatarDashboard',
     component: () => import('./views/AvatarDashboard.vue')
   },
   {
-    path: '/user/:id',
-    name: 'AvatarDetail',
-    component: () => import('./views/AvatarProfile.vue')
+    path: '/avatar/:id',
+    name: 'AvatarProfile',
+    component: () => import('./views/AvatarProfile.vue'),
+    props: true,
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
-
-router.beforeEach((to, from, next) =>{
-  const authStore = useAuthStore()
-  next()
 })
+
+// router.beforeEach((to, from, next) => {
+//   const authStore = useAuthStore()
+//   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+//     next({ name: 'Login' })
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

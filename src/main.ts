@@ -6,6 +6,12 @@ import pinia from './stores/pinia.ts'
 
 const app = createApp(App)
 
+app.directive('focus', {
+  mounted(el) {
+    el.focus()
+  }
+})
+
 app.use(router)
 app.use(pinia)
 app.mount('#app')

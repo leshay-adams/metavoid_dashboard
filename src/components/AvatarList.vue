@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import {ref, onMounted } from 'vue'
 import { useAvatarStore } from '../stores/avatarStore';
+import { useRouter } from 'vue-router';
+import { transformRole } from '../utils/role'
+import { transformStatus } from '../utils/status'
 
 const avatarStore = useAvatarStore()
+const router = useRouter();
+
+const goToAvatarProfile = (id: string) => {
+    router.push({ name: 'AvatarProfile', params: { id }})
+}
 
 onMounted(() => {
   avatarStore.fetchAvatars({ page: 1, limit: 50})
@@ -34,7 +42,12 @@ onMounted(() => {
               </tr>
           </thead>
           <tbody>
-              <tr v-for="avatar in avatarStore.avatars" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+              <tr
+                v-for="avatar in avatarStore.avatars"
+                :key="avatar.id"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
+                @click="goToAvatarProfile(avatar.id)"
+            >
                   <td class="px-6 py-4">
                       {{ avatar.name }}
                   </td>
@@ -42,10 +55,10 @@ onMounted(() => {
                       {{ avatar.email }}
                   </td>
                   <td class="px-6 py-4">
-                      {{ avatar.role }}
+                      {{ transformRole(avatar.role) }}
                   </td>
                   <td class="px-6 py-4">
-                      {{ avatar.status }}
+                      {{ transformStatus(avatar.status) }}
                   </td>
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {{ new Date(avatar.dateJoined).toLocaleDateString() }}

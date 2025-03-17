@@ -3,5 +3,5 @@ import AvatarDashboard from './views/AvatarDashboard.vue'
 </script>
 
 <template>
-  <AvatarDashboard />
+  <router-view></router-view>
 </template>
