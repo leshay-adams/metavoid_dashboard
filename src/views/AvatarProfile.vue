@@ -51,9 +51,30 @@ export default defineComponent({
       { value: 'viewer', label: `${transformRole('viewer')} (Admin)`}
     ])
 
+    const confirmationDialog = (msg: string): Promise<boolean> => {
+      return new Promise((resolve) => {
+        resolve(window.confirm(msg))
+      })
+    }
+
+    const confirmPurgeAvatar = async () => {
+      if (await confirmationDialog("Are you absolutely certain you wish to purge this avatar? This action is irreversible and will be lost forever in the void."))
+      purgeAvatar()
+    }
+
+    const purgeAvatar = async () => {
+      try {
+        await avatarStore.deleteAvatar(route.params.id)
+        alert("Avatar purged from existence")
+        router.push({ name: 'AvatarDashboard' })
+      } catch (err) {
+        alert('Failed to purge the avatar. Please try again.')
+      }
+    }
+
     onMounted(fetchAvatar)
 
-    return { avatar, loading, error, saveChanges, transformRole, transformStatus, roles, isNameValid, isEmailValid, isRoleValid, isStatusValid, isFormValid }
+    return { avatar, loading, error, saveChanges, transformRole, transformStatus, roles, isNameValid, isEmailValid, isRoleValid, isStatusValid, isFormValid, confirmPurgeAvatar }
   }
 })
 </script>
@@ -109,6 +130,7 @@ export default defineComponent({
           Lock in Updates
         </button>
       </form>
+      <button @click="confirmPurgeAvatar">⚠️ Purge Avatar!</button>
     </div>
   </div>
 </template>
