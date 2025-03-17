@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import UsersView from './components/UsersView.vue'
+import AvatarDashboard from './views/AvatarDashboard.vue'
 </script>
 
 <template>
-  <UsersView msg="Vite + Vue" />
+  <router-view></router-view>
 </template>
