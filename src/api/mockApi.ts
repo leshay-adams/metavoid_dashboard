@@ -37,13 +37,17 @@ export const mockApi = {
     );
 
     if (sort.field) {
-      data.sort((a, b) =>
-        sort.field === 'name' 
-          ? sort.order === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-          : sort.order === 'asc' 
-          ? new Date(a.dateJoined).getTime() - new Date(b.dateJoined).getTime()
-          : new Date(b.dateJoined).getTime() - new Date(a.dateJoined).getTime()
-      );
+      data.sort((a, b) => {
+        if (sort.field === 'name') {
+          return sort.order === 'asc'
+            ? a.name.localeCompare(b.name, undefined, { numeric: true })
+            : b.name.localeCompare(a.name, undefined, { numeric: true });
+        } else {
+          return sort.order === 'asc'
+            ? new Date(a.dateJoined).getTime() - new Date(b.dateJoined).getTime()
+            : new Date(b.dateJoined).getTime() - new Date(a.dateJoined).getTime();
+        }
+      });
     }
 
     return { data: data.slice((page - 1) * limit, page * limit), total: data.length, page, limit };
