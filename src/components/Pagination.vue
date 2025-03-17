@@ -20,7 +20,7 @@
   const pages = computed(() => {
     const visiblePages: { name: number; disabled: boolean }[] = []
     for (let i = 1; i <= props.totalPages; i++) {
-      visiblePages.push({ name: i, isDisabled: i === props.currentPage })
+      visiblePages.push({ name: i, disabled: i === props.currentPage })
     }
     return visiblePages
   })
@@ -29,22 +29,22 @@
   const onClickPreviousPage = () => emit('pagechanged', props.currentPage - 1)
   const onClickPage = (page: number) => emit('pagechanged', page)
   const onClickNextPage = () => emit('pagechanged', props.currentPage + 1)
-  const onClickLastPage = () => emit('pagechanged', props.totalPages)
+  const onClickLastPage = () => { if (props.totalPages > 1 && props.currentPage !== props.totalPages) { emit('pagechanged', props.totalPages) }}
 
 </script>
 
 <template>
   <button @click="onClickFirstPage" :disabled="isOnFirstPage" type="button">
-    1
+    First
   </button>
   <button @click="onClickPreviousPage" :disabled="isOnFirstPage" type="button">
     <<
   </button>
-  <button @click="onClickPage" :disabled="page.isDisabled">{{ page.name }}</button>
+  <button v-for="page in pages" @click="onClickPage" :disabled="page.isDisabled">{{ page.name }}</button>
   <button @click="onClickNextPage" :disabled="isOnLastPage" type="button">
     >>
   </button>
   <button @click="onClickLastPage" :disabled="isOnLastPage" type="button">
-    End
+    Last
   </button>
 </template>
