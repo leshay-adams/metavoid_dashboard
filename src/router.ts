@@ -13,6 +13,11 @@ const routes = [
     name: 'AvatarProfile',
     component: () => import('./views/AvatarProfile.vue'),
     props: true,
+  },
+  {
+    path: '/spawn',
+    name: 'SpawnAvatar',
+    component: () => import('./views/SpawnAvatar.vue'),
   }
 ]
 
