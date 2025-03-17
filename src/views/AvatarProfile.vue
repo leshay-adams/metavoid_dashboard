@@ -23,16 +23,16 @@
         <div>
           <label>World Access Level</label>
           <select v-model="avatar.role">
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
-            <option value="Viewer">Viewer</option>
+            <option value="Admin">{{ transformRole('admin') }} (Admin)</option>
+            <option value="Manager">{{ transformRole('manager') }} (Manager)</option>
+            <option value="Viewer">{{ transformRole('viewer') }} (Viewer)</option>
           </select>
         </div>
         <div>
           <label>Connection Status</label>
           <select v-model="avatar.status">
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="active">{{ transformStatus('active') }}</option>
+            <option value="inactive">{{ transformStatus('inactive') }}</option>
           </select>
         </div>
         <button type="submit">
@@ -48,6 +48,8 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { mockApi } from '../api/mockApi.ts'
 import { useAvatarStore } from '../stores/avatarStore.ts'
+import { transformRole } from '../utils/role'
+import { transformStatus } from '../utils/status'
 
 export default defineComponent({
   name: 'AvatarProfile',

@@ -2,6 +2,8 @@
 import {ref, onMounted } from 'vue'
 import { useAvatarStore } from '../stores/avatarStore';
 import { useRouter } from 'vue-router';
+import { transformRole } from '../utils/role'
+import { transformStatus } from '../utils/status'
 
 const avatarStore = useAvatarStore()
 const router = useRouter();
@@ -53,10 +55,10 @@ onMounted(() => {
                       {{ avatar.email }}
                   </td>
                   <td class="px-6 py-4">
-                      {{ avatar.role }}
+                      {{ transformRole(avatar.role) }}
                   </td>
                   <td class="px-6 py-4">
-                      {{ avatar.status }}
+                      {{ transformStatus(avatar.status) }}
                   </td>
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {{ new Date(avatar.dateJoined).toLocaleDateString() }}
