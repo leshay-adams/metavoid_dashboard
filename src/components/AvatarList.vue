@@ -166,7 +166,7 @@ onMounted(async () => {
           <td class="px-6 py-4">{{ avatar.email }}</td>
           <td class="px-6 py-4 text-nowrap">{{ transformRole(avatar.role) }}</td>
           <td class="px-6 py-4 text-nowrap">{{ transformStatus(avatar.status) }}</td>
-          <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <td scope="row" class="px-6 py-4 font-medium text-gray-400 whitespace-nowrap dark:text-white">
             {{ new Date(avatar.dateJoined).toLocaleDateString() }}
           </td>
         </tr>
