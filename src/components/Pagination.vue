@@ -25,19 +25,26 @@
     return visiblePages
   })
 
+  const onClickFirstPage = () => emit('pagechanged', 1)
+  const onClickPreviousPage = () => emit('pagechanged', props.currentPage - 1)
+  const onClickPage = (page: number) => emit('pagechanged', page)
+  const onClickNextPage = () => emit('pagechanged', props.currentPage + 1)
+  const onClickLastPage = () => emit('pagechanged', props.totalPages)
+
 </script>
 
 <template>
-  <button @click="" :disabled="isOnFirstPage" type="button">
+  <button @click="onClickFirstPage" :disabled="isOnFirstPage" type="button">
     1
   </button>
-  <button @click="" :disabled="isOnFirstPage" type="button">
+  <button @click="onClickPreviousPage" :disabled="isOnFirstPage" type="button">
     <<
   </button>
-  <button @click="" :disabled="isOnFirstPage" type="button">
+  <button @click="onClickPage" :disabled="page.isDisabled">{{ page.name }}</button>
+  <button @click="onClickNextPage" :disabled="isOnLastPage" type="button">
     >>
   </button>
-  <button @click="" :disabled="isOnFirstPage" type="button">
+  <button @click="onClickLastPage" :disabled="isOnLastPage" type="button">
     End
   </button>
 </template>
