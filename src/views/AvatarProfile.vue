@@ -74,34 +74,36 @@ onMounted(fetchAvatar)
 </script>
 
 <template>
-  <div>
-    <h2>Avatar Profile</h2>
+  <div class="max-w-2xl mx-auto rounded-xl text-white bg-gradient-to-r from-purple-600 to-blue-500 relative overflow-x-auto p-6 shadow-lg transform transition-transform hover:scale-105">
+    <h2 class="text-2xl font-bold mb-4">Avatar Profile</h2>
     <div v-if="loading">Loading avatar profile...</div>
-    <div v-else-if="error">{{ error }}</div>
+    <div v-else-if="error" class="text-red-400">{{ error }}</div>
     <div v-else>
-      <form @submit.prevent="saveChanges">
+      <form @submit.prevent="saveChanges" class="space-y-4">
         <div>
-          <label for="name">Codename</label>
+          <label for="name" class="text-white font-semibold text-lg">Codename</label>
           <input
             id="name"
             v-model="avatar.name"
             type="text"
             v-focus
+            class="w-full rounded-lg p-3 text-white bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400"
           />
-          <p v-if="isNameValid">{{ isNameValid }}</p>
+          <p v-if="isNameValid" class="text-red-400">{{ isNameValid }}</p>
         </div>
         <div>
-          <label for="email">Comm Channel</label>
+          <label for="email" class="font-semibold text-lg">Comm Channel</label>
           <input
             id="email"
             v-model="avatar.email" 
             type="email"
+            class="w-full rounded-lg p-3 bg-gray-800 placeholder-gray-500 border-gray-700 focus:ring-2 focus:ring-blue-400"
           />
-          <p v-if="isEmailValid">{{ isEmailValid }}</p>
+          <p v-if="isEmailValid" class="text-red-400">{{ isEmailValid }}</p>
         </div>
         <div>
-          <label for="role">World Access Level</label>
-          <select id="role" v-model="avatar.role">
+          <label for="role" class="font-semibold text-lg">World Access Level</label>
+          <select id="role" v-model="avatar.role" class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-400">
             <option
               v-for="role in roles"
               :key="role.value"
@@ -110,21 +112,23 @@ onMounted(fetchAvatar)
               {{ role.label }}
             </option>
           </select>
-          <p v-if="isRoleValid">{{ isRoleValid }}</p>
+          <p v-if="isRoleValid" class="text-red-400">{{ isRoleValid }}</p>
         </div>
         <div>
-          <label for="status">Connection Status</label>
-          <select id="status" v-model="avatar.status">
+          <label for="status" class="font-semibold text-lg">Connection Status</label>
+          <select id="status" v-model="avatar.status"  class="w-full rounded-lg p-3 text-white bg-gray-800 border-gray-700 focus:ring-2 focus:ring-blue-400">
             <option value="active">{{ transformStatus('active') }}</option>
             <option value="inactive">{{ transformStatus('inactive') }}</option>
           </select>
-          <p v-if="isStatusValid">{{ isStatusValid }}</p>
+          <p v-if="isStatusValid" class="text-red-400">{{ isStatusValid }}</p>
         </div>
-        <button type="submit" :disabled="!isFormValid">
-          Lock in Updates
+        <div class="flex justify-between">
+        <button type="submit" :disabled="!isFormValid" class="cursor-pointer rounded-lg bg-indigo-800 text-white px-6 py-2 transition-all hover:bg-blue-900 focus:ring-2 focus:ring-blue-400">
+          🔒 Lock in Updates
         </button>
+        <button @click="confirmPurgeAvatar" class="cursor-pointer rounded-lg bg-red-600 text-white px-6 py-2 transition-all hover:bg-red-700 focus:ring-2 focus:ring-red-400">⚠️ Purge Avatar!</button>
+        </div>
       </form>
-      <button @click="confirmPurgeAvatar">⚠️ Purge Avatar!</button>
     </div>
   </div>
 </template>
