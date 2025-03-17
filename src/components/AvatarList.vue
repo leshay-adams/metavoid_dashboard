@@ -41,8 +41,8 @@ const fetchAvatars = async (page: number) => {
       status: statusFilter.value
     },
     sort: {
-      field: sortByField.value || 'name',
-      order: sortByOrder.value || 'asc'
+      field: sortByField.value || '',
+      order: sortByOrder.value || ''
     }
   })
 }
@@ -63,7 +63,7 @@ const resetFilters = () => {
   roleFilter.value = ''
   statusFilter.value = ''
   sortByField.value = ''
-  sortByOrder.value = 'asc'
+  sortByOrder.value = ''
 }
 
 watch(debouncedNameFilter, (newValue) => {
@@ -123,6 +123,7 @@ onMounted(async () => {
       <div>
         <label for="sortByOrder">Order</label>
         <select id="sortByOrder" v-model="sortByOrder">
+          <option value="">None</option>
           <option value="asc">Asc</option>
           <option value="desc">Desc</option>
         </select>

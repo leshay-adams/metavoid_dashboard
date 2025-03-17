@@ -8,14 +8,23 @@ const roles: Readonly<Role[]> = [
 
 const pastSixMonths = Date.now() - 180 * 24 * 60 * 60 * 1000;
 
+const coolAvatarNaming = () => {
+  const prefixes = ['Nebula', 'Astral', 'Vortex', 'Void', 'Phantom', 'Eclipse', 'Spectra', 'Omega', 'Chrono', 'Aether', 'Nexus', 'Lumen', 'Exo', 'Ethereal', 'Shade']
+  const suffixes = ['Wraith', 'Specter', 'Phantom', 'Cipher', 'Nexus', 'Shard', 'Void', 'Echo', 'Rift', 'Astral', 'Shift', 'Fury', 'Abyss', 'Pulse', 'Flux', 'Shard']
+  const numbers = Math.floor(Math.random() * 1000)
+
+  return `${prefixes[Math.floor(Math.random() * prefixes.length)]}${suffixes[Math.floor(Math.random() * suffixes.length)]}${numbers}`
+}
+
 let users: User[] = [...Array(50)].map((_, i) => ({
   id: (i + 1).toString(),
-  name: `User ${i + 1}`,
+  name: coolAvatarNaming(),
   email: `alias${i + 1}@metavoid.com`,
   role: roles[i % 3].id as 'admin' | 'manager' | 'viewer',
   status: i % 2 ? 'inactive' : 'active',
   dateJoined: new Date(pastSixMonths + Math.random() * (Date.now() - pastSixMonths)).toISOString()
 }))
+
 
 const simDelay = (min = 300, max = 800) => (
   new Promise(res => setTimeout(res, Math.random() * (max - min) + min))
