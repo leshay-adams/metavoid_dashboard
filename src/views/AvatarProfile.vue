@@ -13,9 +13,15 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const avatarStore = useAvatarStore()
-    const avatar = ref<any>(null)
+    const avatar = ref<any>({ name: '', email: '', role: '', status: '' })
     const loading = ref(true)
     const error = ref('')
+
+    const isNameValid = computed(() => (!avatar.value.name ? 'Codename is required' : ''))
+    const isEmailValid = computed(() => (!avatar.value.email || !/\S+@\S+\.\S+/.test(avatar.value.email) ? 'Enter a valid comm channel (email)' : ''))
+    const isRoleValid = computed(() => (!avatar.value.role ? 'World Access Level is required' : ''))
+    const isStatusValid = computed(() => (!avatar.value.status ? 'Connection Status is required' : ''))
+    const isFormValid = computed(() => (!isNameValid.value && !isEmailValid.value && !isRoleValid.value && !isStatusValid.value))
 
     const fetchAvatar = async () => {
       loading.value = true
@@ -47,7 +53,7 @@ export default defineComponent({
 
     onMounted(fetchAvatar)
 
-    return { avatar, loading, error, saveChanges, transformRole, transformStatus, roles }
+    return { avatar, loading, error, saveChanges, transformRole, transformStatus, roles, isNameValid, isEmailValid, isRoleValid, isStatusValid, isFormValid }
   }
 })
 </script>
@@ -67,6 +73,7 @@ export default defineComponent({
             type="text"
             v-focus
           />
+          <p v-if="isNameValid">{{ isNameValid }}</p>
         </div>
         <div>
           <label for="email">Comm Channel</label>
@@ -75,6 +82,7 @@ export default defineComponent({
             v-model="avatar.email" 
             type="email"
           />
+          <p v-if="isEmailValid">{{ isEmailValid }}</p>
         </div>
         <div>
           <label for="role">World Access Level</label>
@@ -87,6 +95,7 @@ export default defineComponent({
               {{ role.label }}
             </option>
           </select>
+          <p v-if="isRoleValid">{{ isRoleValid }}</p>
         </div>
         <div>
           <label for="status">Connection Status</label>
@@ -94,8 +103,9 @@ export default defineComponent({
             <option value="active">{{ transformStatus('active') }}</option>
             <option value="inactive">{{ transformStatus('inactive') }}</option>
           </select>
+          <p v-if="isStatusValid">{{ isStatusValid }}</p>
         </div>
-        <button type="submit">
+        <button type="submit" :disabled="!isFormValid">
           Lock in Updates
         </button>
       </form>
