@@ -40,7 +40,7 @@
   <button @click="onClickPreviousPage" :disabled="isOnFirstPage" type="button">
     <<
   </button>
-  <button v-for="page in pages" @click="onClickPage" :disabled="page.isDisabled">{{ page.name }}</button>
+  <button v-for="page in pages" @click="() => onClickPage(page.name)" :disabled="page.disabled">{{ page.name }}</button>
   <button @click="onClickNextPage" :disabled="isOnLastPage" type="button">
     >>
   </button>

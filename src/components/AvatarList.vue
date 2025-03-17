@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, onMounted, watch } from 'vue'
+import {ref, onMounted, watch, computed } from 'vue'
 import { useAvatarStore } from '../stores/avatarStore'
 import { useRouter } from 'vue-router'
 import { transformRole } from '../utils/role'
@@ -14,8 +14,11 @@ const goToAvatarProfile = (id: string) => {
 }
 
 const currentPage = ref(1)
-const totalPages = ref(1)
 const limit = 8
+
+const totalPages = computed(() => {
+  return Math.ceil(avatarStore.totalAvatars / limit) || 1
+})
 
 const handlePageChange = (newPage: number) => {
   currentPage.value = newPage
@@ -24,15 +27,10 @@ const handlePageChange = (newPage: number) => {
 
 const fetchAvatars = async (page: number) => {
   await avatarStore.fetchAvatars({ page, limit })
-  totalPages.value = avatarStore.totalPages
 }
 
 onMounted(async () => {
   await fetchAvatars(currentPage.value)
-})
-
-watch(() => avatarStore.totalPages, (newTotalPages) => {
-  totalPages.value = newTotalPages
 })
 
 </script>
