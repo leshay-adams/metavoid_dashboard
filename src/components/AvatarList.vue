@@ -74,8 +74,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 relative overflow-x-auto p-6 shadow-lg transform transition-transform hover:scale-105">
-
+  <div class="max-w-6xl mx-auto rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 relative overflow-x-auto p-6 shadow-lg">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-white text-2xl font-bold">Avatar Directory</h2>
       <button
