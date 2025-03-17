@@ -6,31 +6,33 @@
     <div v-else>
       <form @submit.prevent="saveChanges">
         <div>
-          <label>Codename</label>
-          <input 
+          <label for="name">Codename</label>
+          <input
+            id="name"
             v-model="avatar.name"
             type="text"
             v-focus
           />
         </div>
         <div>
-          <label>Comm Channel</label>
-          <input 
+          <label for="email">Comm Channel</label>
+          <input
+            id="email"
             v-model="avatar.email" 
             type="email"
           />
         </div>
         <div>
-          <label>World Access Level</label>
-          <select v-model="avatar.role">
-            <option value="Admin">{{ transformRole('admin') }} (Admin)</option>
-            <option value="Manager">{{ transformRole('manager') }} (Manager)</option>
-            <option value="Viewer">{{ transformRole('viewer') }} (Viewer)</option>
+          <label for="role">World Access Level</label>
+          <select id="role" v-model="avatar.role">
+            <option value="admin">{{ transformRole('admin') }} (Admin)</option>
+            <option value="manager">{{ transformRole('manager') }} (Manager)</option>
+            <option value="viewer">{{ transformRole('viewer') }} (Viewer)</option>
           </select>
         </div>
         <div>
-          <label>Connection Status</label>
-          <select v-model="avatar.status">
+          <label for="status">Connection Status</label>
+          <select id="status" v-model="avatar.status">
             <option value="active">{{ transformStatus('active') }}</option>
             <option value="inactive">{{ transformStatus('inactive') }}</option>
           </select>
@@ -64,7 +66,7 @@ export default defineComponent({
     const fetchAvatar = async () => {
       loading.value = true
       try {
-        const data = await mockApi.getUser(Number(route.params.id))
+        const data = await mockApi.getUser(route.params.id)
         avatar.value = { ...data }
       } catch (err: any) {
         error.value = err.message || 'Severed Connection, avatar echo lost'
@@ -75,7 +77,7 @@ export default defineComponent({
 
     const saveChanges = async () => {
       try {
-        await avatarStore.updateAvatarProfiles(user.value)
+        await avatarStore.updateAvatar(avatar.value)
         alert('Avatar updates locked into the void')
         router.push({ name: 'AvatarDashboard' })
       } catch (err) {
@@ -85,7 +87,9 @@ export default defineComponent({
 
     onMounted(fetchAvatar)
 
-    return { avatar, loading, error, saveChanges }
+
+
+    return { avatar, loading, error, saveChanges, transformRole, transformStatus }
   }
 })
 </script>
