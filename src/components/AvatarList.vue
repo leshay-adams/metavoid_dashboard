@@ -6,6 +6,7 @@ import { transformRole } from '../utils/role'
 import { transformStatus } from '../utils/status'
 import Pagination from '../components/Pagination.vue'
 import { useDebounce } from '../composables/useDebounce'
+import { useFilters } from '../composables/useFilters'
 
 const avatarStore = useAvatarStore()
 const router = useRouter();
@@ -14,26 +15,11 @@ const goToAvatarProfile = (id: string) => {
   router.push({ name: 'AvatarProfile', params: { id }})
 }
 
-const nameFilter = ref('')
-const roleFilter = ref('')
-const statusFilter = ref('')
-const sortByField = ref('')
-const sortByOrder = ref('asc')
-const currentPage = ref(1)
 const limit = 8
-const totalPages = computed(() => {
-  return Math.ceil(avatarStore.totalAvatars / limit) || 1
-})
-const { debouncedValue: debouncedNameFilter, setDebouncedValue } = useDebounce(nameFilter.value, 500)
-
-const handlePageChange = (newPage: number) => {
-  currentPage.value = newPage
-  fetchAvatars(newPage)
-}
 
 const fetchAvatars = async (page: number) => {
   await avatarStore.fetchAvatars({ 
-    page, 
+    page,
     limit,
     filter: {
       name: nameFilter.value,
@@ -47,9 +33,22 @@ const fetchAvatars = async (page: number) => {
   })
 }
 
-const useFilters = async () => {
-  currentPage.value = 1
-  await fetchAvatars(currentPage.value)
+const {
+  nameFilter,
+  roleFilter,
+  statusFilter,
+  sortByField,
+  sortByOrder,
+  currentPage,
+  resetFilters,
+  applyFilters
+} = useFilters(avatarStore, fetchAvatars)
+
+const { debouncedValue: debouncedNameFilter, setDebouncedValue } = useDebounce(nameFilter.value, 500)
+
+const handlePageChange = (newPage: number) => {
+  currentPage.value = newPage
+  fetchAvatars(newPage)
 }
 
 const roles = computed(() => [
@@ -58,13 +57,9 @@ const roles = computed(() => [
   { value: 'viewer', label: `${transformRole('viewer')} (Viewer)`}
 ])
 
-const resetFilters = () => {
-  nameFilter.value = ''
-  roleFilter.value = ''
-  statusFilter.value = ''
-  sortByField.value = ''
-  sortByOrder.value = ''
-}
+const totalPages = computed(() => {
+  return Math.ceil(avatarStore.totalAvatars / limit) || 1
+})
 
 watch(debouncedNameFilter, (newValue) => {
   nameFilter.value = newValue;
@@ -128,7 +123,7 @@ onMounted(async () => {
           <option value="desc">Desc</option>
         </select>
       </div>
-      <button @click="useFilters">
+      <button @click="applyFilters">
         Apply Filters
       </button>
     </div>
