@@ -99,16 +99,21 @@ _PS: I like to write well defined code and I think comments in the code can be m
 I already added debounce to the search to reduce requests. The pagination also reduces the amount of data being fetched. To further optimize API calls I would add custom caching in Pinia.
 
 **2. Describe your approach to handling shared logic between components.**
+
 DRY (Dont Repeat Yourself). For the search debounce I used a composable so that it can be used in all future inputs that may require it. I also stored all filtering logic in a composable for re-usability and to keep my code cleaner. I could also add a useTheme composable to handle the dark / light theming.
 
 **3. How would you implement client-side data caching for this dashboard?**
+
 One could use expired timestamps for data responses. Can also use other caching libraries like Vue Query.
 
 **4. What strategy would you use to scale this application if it needed to support hundreds of different user permission types?**
+
 I certainly would not hard code the permissions. It would have to be a dynamic centralized system that connects each of the roles to permissions. We can then do the neccessary checks in the api and/or UI. I also came across something called micro frontends but I am not too familiar with the concept.
 
 **5. Explain your testing strategy and how you decided what to test.**
+
 Because it's a small application testing will not need to be complex. If I had more time I would've added extensive testing to all the components and wish to do so in the future. I would use a combination of unit tests with Jest and E2E tests with Cyprus to ensure components work well together and all logic flows.
 
 **6. How would you handle offline capabilities in this application?**
+
 I would use caching with Cache API to store important data. I would also take advantage of localstorage to allow the app to continue working without network connection.
