@@ -2,6 +2,15 @@
 A user management dashboard with other worldly theming. Made with love, Vue 3, Composition API, Tailwind, Typescript &amp; Pinia 💛 The app allows admin users to view (search, filter, sort), edit, create and delete new Avatars (users). I use a mockApi that simulates a REST API. I fetch and handle all user data inside a Pinia store.
 
 <br>
+Install Packages
+
+```npm install```
+
+Run App
+
+```npm run dev```
+
+<br>
 
 **📁 Component Architecture**
 
