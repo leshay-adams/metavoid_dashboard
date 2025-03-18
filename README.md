@@ -35,7 +35,7 @@ Here I setup pagination for the AvatarList component. Buttons contain first, las
 
 • Directive to focus on mount
 
-• Dark / Light theme switcher with Tailwind
+• 🌙 Dark / ☀️ Light theme switcher with Tailwind
 
 • Language switcher with i18n supporting English, German and French (implemented only on AvatarList component
 
