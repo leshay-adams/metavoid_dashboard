@@ -43,7 +43,7 @@ Here I setup pagination for the AvatarList component. Buttons contain first, las
 **🚀 Features**
 
 • Utils to translate role and status into cool themed names 
-(eg. admin => 🔮 Overseer of Realities / active => 🔴 inactive => Offline, Link Severed)
+(eg. admin => 🔮 Overseer of Realities / 🔴 inactive => Offline, Link Severed)
 
 • Composables to use debounce on search and another that holds the filtering / sorting
 
