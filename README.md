@@ -25,10 +25,10 @@ Run App
 this is where AvatarList gets imported and other future dashboard components will be imported.
 
 • AvatarProfile: 
-this is the user details page where you can edit the user information as well as delete the specific user.
+this is the user details page where you can edit the user information as well as delete the specific user. Here I implemented error handling.
 
 • SpawnAvatar: 
-a form to create a new user (spawn an avatar)
+a form to create a new user (spawn an avatar).
 
 **Components**
 
@@ -36,7 +36,7 @@ a form to create a new user (spawn an avatar)
 A table displaying all users and all its data. Pagination component and filtering and sorting files get added here.
 
 • Pagination: 
-Here I setup pagination for the AvatarList component. Buttons contain first, last, previous, next and visible pages. Here I implemented error handling.
+Here I setup pagination for the AvatarList component. Buttons contain first, last, previous, next and visible pages. 
 
 <br>
 
